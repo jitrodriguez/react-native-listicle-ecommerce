@@ -1,0 +1,51 @@
+import {View, Text, Pressable, Image, TextInput} from 'react-native';
+import React, { useState } from 'react';
+import {styles} from './styles';
+import Input from '../Input';
+
+export default function Header({
+  title,
+  onBackPress,
+  onLogout,
+  showLogout,
+  showSearch,
+  showBack,
+}) {
+    const [showSearchInput, setShowSearchInput] = useState(false);
+    const onSearchPress = () => {
+        setShowSearchInput(s=>!s);
+    }
+  return (
+    <View>
+        <View style={styles.container}>
+      {showBack ? (
+        <Pressable hitSlop={20} onPress={onBackPress}>
+          <Image
+            style={styles.icon}
+            source={require('./../../assets/back.png')}
+          />
+        </Pressable>
+      ) : showSearch ? (
+        <Pressable hitSlop={20} onPress={onSearchPress}>
+          <Image
+            style={styles.icon}
+            source={require('./../../assets/search.png')}
+          />
+        </Pressable>
+      ) : <View style={styles.icon} />}
+      <Text style={styles.title}>{title}</Text>
+      {showLogout ? (
+        <Pressable hitSlop={20} onPress={onLogout}>
+          <Image
+            style={styles.space}
+            source={require('./../../assets/logout.png')}
+          />
+        </Pressable>
+      ) : <View style={styles.space} />}
+    </View>
+    {showSearchInput && <View style={styles.searchContainer}>
+        <Input placeholder="Type your keyboard" />
+    </View>}
+    </View>
+  );
+}

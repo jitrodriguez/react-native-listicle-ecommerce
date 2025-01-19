@@ -1,35 +1,98 @@
+// Core
 import React, {StrictMode, useEffect, useState} from 'react';
+import {Image} from 'react-native';
 
-import {SafeAreaView, View, Text, StyleSheet} from 'react-native';
-import Splash from './src/screens/auth/Splash';
-import SignUp from './src/screens/auth/SignUp';
+// Navigation
+import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+
+// Components & Screens
+import Favorites from './src/screens/app/Favorites';
+import Home from './src/screens/app/Home';
+import Profile from './src/screens/app/Profile';
 import SignIn from './src/screens/auth/SignIn';
-import Config from 'react-native-config';
+import SignUp from './src/screens/auth/SignUp';
+import Splash from './src/screens/auth/Splash';
 
-import {
-  GoogleSignin,
-} from '@react-native-google-signin/google-signin';
+// Utils & Config
+import Config from 'react-native-config';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {colors} from './src/utils/colors';
+
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+const getTabIcon = (route, focused) => {
+  const icons = {
+    Home: focused ? require(`./src/assets/home_active.png`) : require('./src/assets/home.png'),
+    Favorites: focused ? require('./src/assets/favorites_active.png') : require('./src/assets/favorites.png'),
+    Profile: focused ? require('./src/assets/profile_active.png') : require('./src/assets/profile.png'),
+  };
+  return icons[route.name];
+};
+
+const Tabs = () => (
+  <Tab.Navigator
+    screenOptions={({route}) => ({
+      headerShown: false,
+      tabBarShowLabel: false,
+      tabBarStyle: {
+        borderTopColor: colors.lightGray,
+      },
+      tabBarIcon: ({focused}) => (
+        <Image style={{width: 24, height: 24}} source={getTabIcon(route, focused)} />
+      ),
+    })}>
+    <Tab.Screen name="Home" component={Home} />
+    <Tab.Screen name="Favorites" component={Favorites} />
+    <Tab.Screen name="Profile" component={Profile} />
+  </Tab.Navigator>
+);
+
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: colors.white,
+  },
+};
+
+const googleSignInConfig = {
+  webClientId: Config.GOOGLE_WEB_CLIENT_ID,
+  scopes: ['https://www.googleapis.com/auth/drive.readonly'],
+  offlineAccess: true,
+  forceCodeForRefreshToken: false,
+  iosClientId: Config.GOOGLE_IOS_CLIENT_ID,
+  googleServicePlistPath: '',
+  profileImageSize: 120,
+};
 
 function App() {
+  const [isSignedIn, setIsSignedIn] = useState(true);
 
-  useEffect(()=>{
-    console.log(Config.GOOGLE_WEB_CLIENT_ID)
-    GoogleSignin.configure({
-      webClientId: Config.GOOGLE_WEB_CLIENT_ID, // client ID of type WEB for your server. Required to get the `idToken` on the user object, and for offline access.
-      scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
-      offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
-      forceCodeForRefreshToken: false, // [Android] related to `serverAuthCode`, read the docs link below *.
-      iosClientId: Config.GOOGLE_IOS_CLIENT_ID, // [iOS] if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
-      googleServicePlistPath: '', // [iOS] if you renamed your GoogleService-Info file, new name here, e.g. "GoogleService-Info-Staging"
-      profileImageSize: 120, // [iOS] The desired height (and width) of the profile image. Defaults to 120px
-    });
-  },[])
+  useEffect(() => {
+    GoogleSignin.configure(googleSignInConfig);
+  }, []);
 
   return (
     <StrictMode>
-      <SafeAreaView>
-        <SignIn />
-      </SafeAreaView>
+      <SafeAreaProvider>
+        <NavigationContainer theme={theme}>
+          <Stack.Navigator screenOptions={{headerShown: false}}>
+            {isSignedIn ? (
+              <Stack.Screen name="Tabs" component={Tabs} />
+            ) : (
+              <>
+                <Stack.Screen name="Splash" component={Splash} />
+                <Stack.Screen name="SignIn" component={SignIn} />
+                <Stack.Screen name="SignUp" component={SignUp} />
+              </>
+            )}
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaProvider>
     </StrictMode>
   );
 }

@@ -2,6 +2,8 @@ This is a new [**React Native**](https://reactnative.dev) project, bootstrapped 
 
 # Getting Started
 
+Project based on Figma design: [Link](https://www.figma.com/design/skiGLfE5uwTBqcTS0ThKFK/Listicle-app?node-id=407-2924&t=ckqJfYGf7AMAml7h-1)
+
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
 
 ## Step 1: Start the Metro Server
