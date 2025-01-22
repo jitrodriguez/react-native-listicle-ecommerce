@@ -14,6 +14,7 @@ import Profile from './src/screens/app/Profile';
 import SignIn from './src/screens/auth/SignIn';
 import SignUp from './src/screens/auth/SignUp';
 import Splash from './src/screens/auth/Splash';
+import ProductDetail from './src/screens/app/ProductDetail';
 
 // Utils & Config
 import Config from 'react-native-config';
@@ -82,7 +83,10 @@ function App() {
         <NavigationContainer theme={theme}>
           <Stack.Navigator screenOptions={{headerShown: false}}>
             {isSignedIn ? (
-              <Stack.Screen name="Tabs" component={Tabs} />
+              <>
+                <Stack.Screen name="Tabs" component={Tabs} />
+                <Stack.Screen name="ProductDetail" component={ProductDetail} />
+              </>
             ) : (
               <>
                 <Stack.Screen name="Splash" component={Splash} />

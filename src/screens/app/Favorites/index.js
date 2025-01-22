@@ -5,10 +5,10 @@ import { styles } from './styles';
 import { products } from '../../../data/products';
 import FavoriteItem from '../../../components/FavoriteItem';
 
-function Favorites() {
+function Favorites({navigation}) {
   const renderItem = ({ item, index }) => {
     return (
-      <FavoriteItem {...item} onPress={() => console.log('pressed')} />
+      <FavoriteItem {...item} onPress={()=>navigation.navigate('ProductDetail',{product:item})} />
     )};
 
   return (

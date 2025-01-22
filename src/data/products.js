@@ -4,7 +4,8 @@ export const products = [
         title: 'Loft Style Chair',
         image: 'https://lofthome.com/cdn/shop/collections/chair-by-type_30a10481-d480-437b-92b7-206b0d67d5b8.jpg',
         category: 1,
-        price: '$ 20.00'
+        price: '$ 20.00',
+        description: 'Minimal Stand is made of by natural wood. The design that is very simple and minimal. This is truly one of the best furnitures in any family for now. With 3 different colors, you can easily select the best match for your home.'
     },
     {
         id: 2,
@@ -33,7 +34,7 @@ export const products = [
         image: 'https://cdn.shopify.com/s/files/1/0755/3214/0819/files/Jethro_Sofa_-_Content_3_480x480.jpg',
         images: [
             'https://collinsandhayes-cdn-1.s3.eu-west-2.amazonaws.com/wp-content/uploads/2022/02/14101256/V7A1199-800x800.jpg',
-            'https://www.housingunits.co.uk/media/catalog/product/cache/60968cec045f20fb06ab5f7720001507/5/5/555685b1a8eecf2133f18451526a4ede.jpg',
+            'https://cdn.shopify.com/s/files/1/0755/3214/0819/files/Jethro_Sofa_-_Content_3_480x480.jpg',
             'https://media.sofa.com/thumbor/unsafe/https%3A%2F%2Fmedia.sofa.com%2Fmedias%2FSS22-Homepage-Category-Tiles-1-SOFAS.jpg%3Fcontext%3DbWFzdGVyfHJvb3R8MTM1MzYyfGltYWdlL2pwZWd8aDUyL2g0ZC84OTk4ODEwNTgzMDcwLmpwZ3xjNWUzZDYzMjY2NGNhNWJkYjUwNjg4MDlkNzBiZTFlYmNiNmE1YWEyNDEwMTFhYWRlYTI0OGMwZGVlZTE1OWE1',
         ],
         category: 4,

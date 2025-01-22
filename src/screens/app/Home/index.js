@@ -10,12 +10,11 @@ import {categories} from '../../../data/categories';
 import {products} from '../../../data/products';
 import {styles} from './styles';
 
-function Home() {
+function Home({navigation}) {
   const [selectedCategory, setSelectedCategory] = React.useState(null);
   const [keyword, setKeyword] = React.useState('');
   const [filteredProducts, setFilteredProducts] = React.useState(products);
 
-  console.log('keyword', keyword);
   useEffect(() => {
     if (selectedCategory && !keyword) {
       const updatedProducts = products.filter(
@@ -49,8 +48,11 @@ function Home() {
       />
     );
   };
-  const renderProductItem = ({item, index}) => {
-    return <ProductHomeItem {...item} onPress={() => console.log('pressed')} />;
+  const renderProductItem = ({item}) => {
+    const onProductPress = () => {
+      navigation.navigate('ProductDetail', {product:item});
+    }
+    return <ProductHomeItem {...item} onPress={onProductPress} />;
   };
   return (
     <SafeAreaView style={styles.container}>
