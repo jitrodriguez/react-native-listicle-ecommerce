@@ -6,8 +6,12 @@ import Header from '../../../components/Header';
 import Button from '../../../components/Button';
 import ListItem from '../../../components/ListItem';
 
-function Profile() {
+function Profile({navigation}) {
   const onLogout = () => {console.log('Logout')};
+  const onSettingsPress = () => {navigation.navigate('Settings')};
+  const onListingsPress = () => {navigation.navigate('MyListings')};
+  const onCreateListingPress = () => {navigation.navigate('CreateListing')};
+  const num = 10;
   return (
     <SafeAreaView style={styles.container}>
         <Header title="Profile" showLogout onLogout={onLogout}/>
@@ -16,10 +20,10 @@ function Profile() {
             <Text style={styles.name} >User Name</Text>
             <Text style={styles.email}>Email</Text>
           </View>
-          <ListItem title="My Listings" subtitle="Already have 10 listing" />
-          <ListItem title="Settings" subtitle="Account, FAQ, Contact" />
+          <ListItem title="My Listings" subtitle={`Already have ${num} listing`} onPress={onListingsPress}/>
+          <ListItem title="Settings" subtitle="Account, FAQ, Contact"  onPress={onSettingsPress}/>
         </View>
-        <Button style={{flex:0}} title="Add a new listing" />
+        <Button style={{flex:0}} onPress={onCreateListingPress} title="Add a new listing" />
     </SafeAreaView>
   )
 }

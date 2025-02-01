@@ -21,15 +21,29 @@ import Config from 'react-native-config';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {colors} from './src/utils/colors';
+import Settings from './src/screens/app/Settings';
+import CreateListing from './src/screens/app/CreateListing';
+import MyListings from './src/screens/app/MyListings';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
+const ProfileStack = ()=>{
+  return (
+    <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Settings" component={Settings} />
+      <Stack.Screen name="CreateListing" component={CreateListing} />
+      <Stack.Screen name="MyListings" component={MyListings} />
+    </Stack.Navigator>
+  )
+}
 
 const getTabIcon = (route, focused) => {
   const icons = {
     Home: focused ? require(`./src/assets/home_active.png`) : require('./src/assets/home.png'),
     Favorites: focused ? require('./src/assets/favorites_active.png') : require('./src/assets/favorites.png'),
-    Profile: focused ? require('./src/assets/profile_active.png') : require('./src/assets/profile.png'),
+    ProfileStack: focused ? require('./src/assets/profile_active.png') : require('./src/assets/profile.png'),
   };
   return icons[route.name];
 };
@@ -48,7 +62,7 @@ const Tabs = () => (
     })}>
     <Tab.Screen name="Home" component={Home} />
     <Tab.Screen name="Favorites" component={Favorites} />
-    <Tab.Screen name="Profile" component={Profile} />
+    <Tab.Screen name="ProfileStack" component={ProfileStack} />
   </Tab.Navigator>
 );
 
