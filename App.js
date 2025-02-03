@@ -1,35 +1,54 @@
-import React, {StrictMode, useEffect, useState} from 'react';
-
-import {SafeAreaView, View, Text, StyleSheet} from 'react-native';
-import Splash from './src/screens/auth/Splash';
-import SignUp from './src/screens/auth/SignUp';
-import SignIn from './src/screens/auth/SignIn';
+// Core
+import React, { StrictMode, useEffect, useState } from 'react';
+// Utils & Config
 import Config from 'react-native-config';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import Routes from './Routes';
 
-import {
-  GoogleSignin,
-} from '@react-native-google-signin/google-signin';
+export const UserContext = React.createContext();
+export const ProfileContext = React.createContext();
+export const ServicesContext = React.createContext();
+
+const googleSignInConfig = {
+  webClientId: Config.GOOGLE_WEB_CLIENT_ID,
+  scopes: ['https://www.googleapis.com/auth/drive.readonly'],
+  offlineAccess: true,
+  forceCodeForRefreshToken: false,
+  iosClientId: Config.GOOGLE_IOS_CLIENT_ID,
+  googleServicePlistPath: '',
+  profileImageSize: 120
+};
 
 function App() {
+  const [user, setUserEstate] = useState();
+  const [profile, setProfile] = useState();
+  const [services, setServicesEstate] = useState();
 
-  useEffect(()=>{
-    console.log(Config.GOOGLE_WEB_CLIENT_ID)
-    GoogleSignin.configure({
-      webClientId: Config.GOOGLE_WEB_CLIENT_ID, // client ID of type WEB for your server. Required to get the `idToken` on the user object, and for offline access.
-      scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
-      offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
-      forceCodeForRefreshToken: false, // [Android] related to `serverAuthCode`, read the docs link below *.
-      iosClientId: Config.GOOGLE_IOS_CLIENT_ID, // [iOS] if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
-      googleServicePlistPath: '', // [iOS] if you renamed your GoogleService-Info file, new name here, e.g. "GoogleService-Info-Staging"
-      profileImageSize: 120, // [iOS] The desired height (and width) of the profile image. Defaults to 120px
-    });
-  },[])
+  const setUser = user => {
+    console.log('user ==> ', user);
+    setUserEstate(user);
+  };
+
+  const setServices = data => {
+    setServicesEstate(data);
+  };
+
+  useEffect(() => {
+    GoogleSignin.configure(googleSignInConfig);
+  }, []);
 
   return (
     <StrictMode>
-      <SafeAreaView>
-        <SignIn />
-      </SafeAreaView>
+      <SafeAreaProvider>
+        <UserContext.Provider value={{ user, setUser }}>
+          <ProfileContext.Provider value={{ profile, setProfile }}>
+            <ServicesContext.Provider value={{ services, setServices }}>
+              <Routes />
+            </ServicesContext.Provider>
+          </ProfileContext.Provider>
+        </UserContext.Provider>
+      </SafeAreaProvider>
     </StrictMode>
   );
 }

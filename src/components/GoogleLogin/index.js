@@ -1,5 +1,5 @@
-import { Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { Image, TouchableOpacity } from 'react-native';
+import React from 'react';
 import { styles } from './styles';
 
 import {
@@ -7,15 +7,15 @@ import {
   statusCodes,
   isErrorWithCode,
   isSuccessResponse,
-  isNoSavedCredentialFoundResponse,
+  isNoSavedCredentialFoundResponse
 } from '@react-native-google-signin/google-signin';
 
-export default function GoogleLogin({onPress}) {
+export default function GoogleLogin() {
   const handleLogin = async () => {
     try {
       await GoogleSignin.hasPlayServices();
       const response = await GoogleSignin.signIn();
-  
+
       if (isSuccessResponse(response)) {
         // read user's info
         console.log(response.data);
@@ -48,7 +48,7 @@ export default function GoogleLogin({onPress}) {
   };
   return (
     <TouchableOpacity activeOpacity={0.6} onPress={handleLogin} style={styles.container}>
-        <Image style={styles.image} source={require('./../../assets/google_icon.png')} />
+      <Image style={styles.image} source={require('./../../assets/google_icon.png')} />
     </TouchableOpacity>
-  )
+  );
 }
