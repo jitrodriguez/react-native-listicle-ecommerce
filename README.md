@@ -8,6 +8,6 @@ Project based on Figma design and Listicle API.
 
 # Demo
 
-<video width="100%" height="500" controls>
-  <source src="./demo/demo.mp4" type="video/mp4">
-</video>
+https://github.com/user-attachments/assets/d4de5f5d-4910-4178-bee6-0938ca232786
+
+
