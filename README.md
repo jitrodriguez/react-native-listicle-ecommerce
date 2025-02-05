@@ -1,4 +1,4 @@
-This is a simple [**React Native**](https://reactnative.dev) project, to remember the basic knowledge and review about the new react native.
+This is a simple [**React Native**](https://reactnative.dev) project, to remember the basic knowledge and review react native.
 
 Project based on Figma design and Listicle API.
 
